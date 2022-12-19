@@ -1,27 +1,41 @@
 //** getYieldForPlant **//
 const getYieldForPlant = (input, environmentFactors) => {
   let result = 0;
-  const sun = input.factor.sun;
-  const rain = input.factor.rain;
-  const adjustFactorSun = () => {
-    calculationSun = (sun[environmentFactors.sun] + 100) / 100;
-    return calculationSun;
-  };
-  const adjustFactorRain = () => {
-    calculationRain = (rain[environmentFactors.rain] + 100) / 100;
-    return calculationRain;
-  };
 
-  if (sun && rain !== undefined) {
-    result += input.yield * adjustFactorSun() * adjustFactorRain();
-    return result;
-  } else if (sun) {
-    result += input.yield * adjustFactorSun();
-    return result;
-  } else if (rain) {
-    result += input.yield * adjustFactorRain();
-    return result;
+  // determine if environmentfactors apply //
+  if (typeof environmentFactors !== "undefined") {
+    let sun = "sun" in input.factor;
+    let rain = "rain" in input.factor;
+
+    // calculation function per environmentfactor //
+    const calculationAdjustFactorSun = () => {
+      calculationSun = (input.factor.sun[environmentFactors.sun] + 100) / 100;
+      return calculationSun;
+    };
+    const calculationAdjustFactorRain = () => {
+      calculationRain =
+        (input.factor.rain[environmentFactors.rain] + 100) / 100;
+      return calculationRain;
+    };
+
+    // calculation yield per crop with applying the environmentfactor //
+    if (sun && rain) {
+      result +=
+        input.yield *
+        calculationAdjustFactorSun() *
+        calculationAdjustFactorRain();
+      return result;
+    } else if (sun) {
+      result += input.yield * calculationAdjustFactorSun();
+      return result;
+    } else if (rain) {
+      result += input.yield * calculationAdjustFactorRain();
+      return result;
+    } else {
+      return input.yield;
+    }
   } else {
+    // if none environmentfactor not exist, return the default yield per crop //
     return input.yield;
   }
 };
