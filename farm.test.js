@@ -14,7 +14,7 @@ const {
 describe("getYieldForPlant", () => {
   const corn = {
     name: "corn",
-    yield: 10,
+    yield: 30,
     factor: {
       sun: {
         low: -50,
@@ -29,12 +29,13 @@ describe("getYieldForPlant", () => {
   };
 
   //** getYieldForPlant without environmental factors **//
-  // test("Get yield for plant with no environment factors", () => {
-  //   expect(getYieldForPlant(corn)).toBe(30);
-  // });
+  test("Get yield for plant with no environment factors", () => {
+    expect(getYieldForPlant(corn)).toBe(30);
+  });
 
+  //** getYieldForPlant with environmental factors **//
   test("Get yield for plant with environment factors", () => {
-    expect(getYieldForPlant(corn, environmentFactors)).toBe(5);
+    expect(getYieldForPlant(corn, environmentFactors)).toBe(15);
   });
 });
 
@@ -63,10 +64,11 @@ describe("getYieldForCrop", () => {
   };
 
   //** getYieldForCrop without environmental factors **//
-  // test("Get yield for crop, simple", () => {
-  //   expect(getYieldForCrop(input)).toBe(30);
-  // });
+  test("Get yield for crop, simple", () => {
+    expect(getYieldForCrop(input)).toBe(30);
+  });
 
+  //** getYieldForCrop with environmental factors **//
   test("Get yield for crop, with environment factors", () => {
     expect(getYieldForCrop(input, environmentFactors)).toBe(15);
   });
@@ -115,10 +117,11 @@ describe("getTotalYield", () => {
   };
 
   //** getTotalYield without environmental factors **//
-  // test("Calculate total yield with multiple crops", () => {
-  //   expect(getTotalYield({ crops })).toBe(23);
-  // });
+  test("Calculate total yield with multiple crops", () => {
+    expect(getTotalYield({ crops })).toBe(23);
+  });
 
+  //** getTotalYield with environmental factors **//
   test("Calculate total yield with multiple crops and with environment factors", () => {
     expect(getTotalYield({ crops }, environmentFactors)).toBe(13.5);
   });
@@ -138,9 +141,10 @@ describe("getTotalYield", () => {
 
     const crops = [{ crop: corn, numCrops: 0 }];
 
-    //** getTotalYield ith 0 amount and without environmental factors **//
-    // expect(getTotalYield({ crops })).toBe(0);
+    //** getTotalYield with 0 amount and without environmental factors **//
+    expect(getTotalYield({ crops })).toBe(0);
 
+    //** getTotalYield with 0 amount and with environmental factors **//
     expect(getTotalYield({ crops }, environmentFactors)).toBe(0);
   });
 });
@@ -198,6 +202,12 @@ describe("getRevenueForCrop", () => {
     rain: "high",
   };
 
+  //** getRevenueForCrop without environmental factors **//
+  test("Get revenue for crop without environmental factors", () => {
+    expect(getRevenueForCrop(input)).toBe(30);
+  });
+
+  //** getRevenueForCrop with environmental factors **//
   test("Get revenue for crop", () => {
     expect(getRevenueForCrop(input, environmentFactors)).toBe(15);
   });
@@ -230,6 +240,12 @@ describe("getProfitForCrop", () => {
     rain: "high",
   };
 
+  //** getProfitForCrop without environmental factors **//
+  test("Get profit for cropwithout environmental factors", () => {
+    expect(getProfitForCrop(input)).toBe(200);
+  });
+
+  //** getProfitForCrop with environmental factors **//
   test("Get profit for crop", () => {
     expect(getProfitForCrop(input, environmentFactors)).toBe(50);
   });
